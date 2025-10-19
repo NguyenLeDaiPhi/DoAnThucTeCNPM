@@ -1,6 +1,7 @@
 package com.e_health_care.web.doctor.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,21 +32,24 @@ public class DoctorPartConfiguration {
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http 
-                .csrf(csrf -> csrf.disable())
-                .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> 
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/doctor/login").permitAll();
-                    request.anyRequest().authenticated();
-                });
+                    .csrf(csrf -> csrf.disable()) // Disabling for simplicity, consider enabling in production
+                    .sessionManagement(session -> 
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                    .authorizeHttpRequests(request -> request
+                        // Permit access to the login page and all static resources
+                        .requestMatchers("/doctor/login", "/css/**", "/js/**", "/images/**").permitAll()
+                        // All other requests must be authenticated
+                        .anyRequest().authenticated()
+                    );
                 return http.build();
         }
 
         @Bean 
+        @Deprecated
         public AuthenticationProvider authenticationProvider() {
-                DaoAuthenticationProvider provider = new DaoAuthenticationProvider(doctorDetailsService);
+                DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+                provider.setUserDetailsService(doctorDetailsService);
                 provider.setPasswordEncoder(passwordEncoder());
                 return provider;
         }
