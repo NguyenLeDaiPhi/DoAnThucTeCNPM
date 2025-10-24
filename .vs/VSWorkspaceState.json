@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\web",
+    "\\web\\src",
+    "\\web\\src\\main",
+    "\\web\\src\\main\\java",
+    "\\web\\src\\main\\java\\com",
+    "\\web\\src\\main\\java\\com\\e_health_care",
+    "\\web\\src\\main\\java\\com\\e_health_care\\web",
+    "\\web\\src\\main\\resources",
+    "\\web\\src\\main\\resources\\templates",
+    "\\web\\src\\test"
+  ],
+  "SelectedNode": "\\web\\src\\main\\resources\\application.properties",
+  "PreviewInSolutionExplorer": false
+}

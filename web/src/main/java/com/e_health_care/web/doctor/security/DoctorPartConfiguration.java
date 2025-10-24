@@ -1,8 +1,10 @@
 package com.e_health_care.web.doctor.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.e_health_care.web.doctor.service.DoctorDetailsService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,54 +16,68 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.e_health_care.web.doctor.service.DoctorDetailsService;
-
 @Configuration
 @EnableWebSecurity
+@Order(1) // Bác sĩ load trước user
 public class DoctorPartConfiguration {
-        @Autowired
-        private DoctorDetailsService doctorDetailsService;
 
-        public DoctorPartConfiguration(DoctorDetailsService doctorDetailsService) {
-                this.doctorDetailsService = doctorDetailsService;
-        }
-        
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http 
-                .csrf(csrf -> csrf.disable())
-                .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session -> 
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(request -> { 
-                    request.requestMatchers("/css/**", "js/**").permitAll();
-                    request.anyRequest().authenticated();
-                })
-                .formLogin(form -> form 
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/index")
-                        .failureUrl("/login?error")
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll());
-                return http.build();
-        }
+    private final DoctorDetailsService doctorDetailsService;
 
-        @Bean
-        public AuthenticationProvider authenticationProvider() {
-                DaoAuthenticationProvider provider = new DaoAuthenticationProvider(doctorDetailsService);
-                provider.setPasswordEncoder(passwordEncoder());
-                return provider;
-        }
+    public DoctorPartConfiguration(DoctorDetailsService doctorDetailsService) {
+        this.doctorDetailsService = doctorDetailsService;
+    }
 
-        @Bean
-        public BCryptPasswordEncoder passwordEncoder() {
-                return new BCryptPasswordEncoder(15);
-        }
+    // ✅ Encoder riêng cho Doctor
+    @Bean(name = "doctorPasswordEncoder")
+    public BCryptPasswordEncoder doctorPasswordEncoder() {
+        return new BCryptPasswordEncoder(15);
+    }
 
-        @Bean
-        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-                return config.getAuthenticationManager();
-        }
+    // ✅ Provider riêng cho Doctor
+    @Bean(name = "doctorAuthenticationProvider")
+    public AuthenticationProvider doctorAuthenticationProvider(
+            @Qualifier("doctorPasswordEncoder") BCryptPasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(doctorDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return provider;
+    }
+
+    // ✅ AuthenticationManager riêng cho Doctor
+    @Bean(name = "doctorAuthenticationManager")
+    public AuthenticationManager doctorAuthenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    // ✅ Cấu hình SecurityFilterChain riêng cho Doctor
+    @Bean
+    public SecurityFilterChain doctorSecurityFilterChain(
+            HttpSecurity http,
+            @Qualifier("doctorAuthenticationProvider") AuthenticationProvider authProvider) throws Exception {
+
+        http
+            .securityMatcher("/doctor/**", "/doctor/login")
+            .authenticationProvider(authProvider)
+            .csrf(csrf -> csrf.disable())
+            .httpBasic(Customizer.withDefaults())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(request -> {
+                request.requestMatchers("/css/**", "/js/**").permitAll();
+                request.requestMatchers("/doctor/register", "/doctor/login").permitAll();
+                request.requestMatchers("/doctor/**").authenticated();
+                request.anyRequest().permitAll();
+            })
+            .formLogin(form -> form
+                .loginPage("/doctor/login")
+                .loginProcessingUrl("/doctor/login")
+                .defaultSuccessUrl("/doctor/dashboard", true)
+                .failureUrl("/doctor/login?error")
+                .permitAll())
+            .logout(logout -> logout
+                .logoutUrl("/doctor/logout")
+                .logoutSuccessUrl("/doctor/login?logout")
+                .permitAll());
+
+        return http.build();
+    }
 }
