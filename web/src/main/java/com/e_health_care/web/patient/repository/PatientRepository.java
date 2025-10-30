@@ -10,4 +10,5 @@ import com.e_health_care.web.patient.model.Patient;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
     Optional<Patient> findByEmail(String email);
+    Optional<Patient> findById(long id);
 }
