@@ -71,6 +71,5 @@ public class AuthenticationControllerPatient {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         return "redirect:/patient/login?logout";
-    
     }
 }
