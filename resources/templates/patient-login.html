@@ -21,7 +21,10 @@
         </div>
 
         <!-- Hiển thị thông báo lỗi (nếu có) -->
-        <div th:if="${param.error}" class="alert alert-danger" th:text="${param.error}">Sai thông tin đăng nhập</div>
+        <div th:if="${param.error}" class="alert alert-danger">
+    Sai thông tin đăng nhập! Vui lòng kiểm tra lại.
+</div>
+
         <div th:if="${param.logout}" class="alert alert-success">Bạn đã đăng xuất thành công</div>
 
         <form th:action="@{/patient/login}" method="post">
