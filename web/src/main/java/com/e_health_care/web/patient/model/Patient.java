@@ -24,4 +24,5 @@ public class Patient {
 	private String password;
 	private String address;
 	private int phone;
+
 }

@@ -1,5 +1,6 @@
 package com.e_health_care.web.patient.service;
 
+import com.e_health_care.web.config.ModelMapperConfig;
 import com.e_health_care.web.patient.dto.PatientDTO;
 import com.e_health_care.web.patient.dto.UpdatePatientRequest;
 import com.e_health_care.web.patient.dto.UpdatePatientResponse;
@@ -25,6 +26,13 @@ public class PatientService {
         modelMapper.map(request, patient);
 
         patientRepository.save(patient);
+
+        return modelMapper.map(patient, UpdatePatientResponse.class);
+    }
+
+    public UpdatePatientResponse getProfilePatient(long id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found patient"));
 
         return modelMapper.map(patient, UpdatePatientResponse.class);
     }

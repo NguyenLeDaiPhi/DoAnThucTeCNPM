@@ -6,10 +6,7 @@ import com.e_health_care.web.patient.service.PatientService;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/patient")
@@ -19,6 +16,12 @@ public class PatientController {
     @PutMapping("/id")
     public ResponseEntity<?> updatePatient(@RequestBody UpdatePatientRequest request) {
         UpdatePatientResponse response = patientService.updatePatient(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProfilePatient(@PathVariable long id) {
+        UpdatePatientResponse response = patientService.getProfilePatient(id);
         return ResponseEntity.ok(response);
     }
 }
