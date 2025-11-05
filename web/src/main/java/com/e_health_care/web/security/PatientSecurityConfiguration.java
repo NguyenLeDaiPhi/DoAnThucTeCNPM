@@ -35,15 +35,14 @@ public class PatientSecurityConfiguration {
     @Bean
     public SecurityFilterChain patientSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-            .securityMatcher("/patient/**", "/css/**", "/js/**", "/images/**", "/")
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtFilterPatient, UsernamePasswordAuthenticationFilter.class)
-            .authorizeHttpRequests(request -> request
-                .requestMatchers("/patient/login", "/patient/register", "/patient/success", "/css/**", "/js/**", "/images/**", "/").permitAll()
-                .anyRequest().authenticated()
-            );
+                .securityMatcher("/patient/**", "/css/**", "/js/**", "/images/**", "/")
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilterPatient, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/patient/login", "/patient/register", "/patient/success", "/css/**", "/js/**", "/images/**", "/").permitAll()
+                        .anyRequest().permitAll()
+                );
         return http.build();
     }
 }
-

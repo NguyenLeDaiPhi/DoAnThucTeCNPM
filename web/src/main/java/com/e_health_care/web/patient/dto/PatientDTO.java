@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class PatientDTO {
+    private long id;
     private String email;
     private String password;
     private String firstName;
