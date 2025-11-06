@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 public class PatientPrinciple implements UserDetails {
     private Patient patient;
 
@@ -14,7 +15,12 @@ public class PatientPrinciple implements UserDetails {
         this.patient = patient;
     }
 
-     @Override
+    // Getter cho patient để controller truy cập (tránh NPE)
+    public Patient getPatient() {
+        return patient;
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority("PATIENT"));
     }
@@ -31,21 +37,36 @@ public class PatientPrinciple implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return true;  // Production: return patient.isAccountNonExpired();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return true;  // Production: return !patient.isLocked();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return true;  // Production: return patient.isCredentialsNonExpired();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return true;  // Production: return patient.isEnabled();
+    }
+
+    // Optional: Override cho cache/session an toàn
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        PatientPrinciple that = (PatientPrinciple) obj;
+        // return patient != null ? patient.getId().equals(that.patient.getId()) : that.patient == null;
+        return patient != null ? patient.getId().equals(that.patient.getId()) : that.patient == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return patient != null ? patient.getId().hashCode() : 0;
     }
 }

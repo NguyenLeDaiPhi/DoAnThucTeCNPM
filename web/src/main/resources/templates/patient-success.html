@@ -23,6 +23,10 @@
             <p><strong>Address:</strong> <span th:text="${patient.address}"></span></p>
             <p><strong>Phone:</strong> <span th:text="${patient.phone}"></span></p>
         </div>
+        <div class = "appointment">
+            <a th:href="@{/patient/appointment/book}" class="btn btn-primary">Đặt Lịch Khám</a>
+            <a th:href="@{/patient/appointment/list}" class="btn btn-info">Xem Lịch Hẹn</a>
+        </div>
         <div class="action-links">
             <a th:href="@{/patient/update/{id}(id=${patient.id})}">Update Profile</a>
             <form th:action="@{/patient/logout}" method="post">

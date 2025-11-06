@@ -6,12 +6,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
 
 @Data
 @Entity
 @Table(name = "patient")
 public class Patient {
-    @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
@@ -21,4 +24,10 @@ public class Patient {
 	private String password;
 	private String address;
 	private int phone;
+
+	// getter
+	public Long getId() {
+		return id;
+	}
+
 }
