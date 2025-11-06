@@ -31,4 +31,11 @@
         </form>
     </div>
 </body>
+<script>
+    function saveJwtToken(token) {
+        localStorage.setItem('jwtToken', token);
+        window.location.href = '/patient/index'; // hoặc dashboard
+    }
+</script>
+
 </html>

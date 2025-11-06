@@ -11,6 +11,9 @@
         <h2>Welcome, Patient!</h2>
         <p>This is your main dashboard. You have successfully logged in.</p>
 
+        <a th:href="@{/patient/appointment/book}" class="btn btn-primary">Đặt Lịch Khám</a>
+        <a th:href="@{/patient/appointment/list}" class="btn btn-info">Xem Lịch Hẹn</a>
+
         <form action="/patient/logout" method="post" style="margin-top: 2rem;">
             <button type="submit">Logout</button>
         </form>
