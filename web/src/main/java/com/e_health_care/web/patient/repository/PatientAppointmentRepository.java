@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+public interface PatientAppointmentRepository extends JpaRepository<Appointment, Long> {
     // Tìm các lịch hẹn của bác sĩ trong khoảng thời gian
     List<Appointment> findByDoctorIdAndScheduleTimeBetween(Long doctorId, LocalDateTime start, LocalDateTime end);
     

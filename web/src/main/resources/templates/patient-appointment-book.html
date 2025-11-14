@@ -24,7 +24,7 @@
                 <option value="">-- Chọn Bác Sĩ --</option>
                 <option th:each="doctor : ${doctors}"
                         th:value="${doctor.id}"
-                        th:text="${doctor.lastName + ' - ' + doctor.firstName}"></option>
+                        th:text="${doctor.lastName + ' ' + doctor.firstName + ' | ' + doctor.field}"></option>
             </select>
         </div>
 

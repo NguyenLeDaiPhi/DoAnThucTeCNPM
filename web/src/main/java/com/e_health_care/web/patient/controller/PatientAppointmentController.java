@@ -3,7 +3,7 @@ package com.e_health_care.web.patient.controller;
 import com.e_health_care.web.patient.dto.AppointmentRequestDTO;
 import com.e_health_care.web.patient.model.Appointment;
 import com.e_health_care.web.patient.model.PatientPrinciple;
-import com.e_health_care.web.patient.service.AppointmentService;
+import com.e_health_care.web.patient.service.PatientAppointmentService;
 import com.e_health_care.web.doctor.model.Doctor;
 import com.e_health_care.web.doctor.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/patient/appointment")
-public class AppointmentController {
+public class PatientAppointmentController {
 
     @Autowired
-    private AppointmentService appointmentService;
+    private PatientAppointmentService appointmentService;
 
     @Autowired
     private DoctorRepository doctorRepository;

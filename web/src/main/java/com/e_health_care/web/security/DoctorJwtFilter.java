@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.e_health_care.web.doctor.service.DoctorDetailsService;
-import com.e_health_care.web.doctor.service.JwtServiceDoctor;
+import com.e_health_care.web.doctor.service.DoctorJwtService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,10 +23,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
-public class JwtFilterDoctor extends OncePerRequestFilter{
+public class DoctorJwtFilter extends OncePerRequestFilter{
 
     @Autowired
-    private JwtServiceDoctor jwtService;
+    private DoctorJwtService jwtService;
 
     @Autowired
     ApplicationContext context;

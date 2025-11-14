@@ -1,7 +1,6 @@
 package com.e_health_care.web.patient.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ProviderManager;
@@ -15,7 +14,7 @@ import com.e_health_care.web.patient.model.Patient;
 import com.e_health_care.web.patient.repository.PatientRepository;
 
 @Service
-public class AuthenticationServicePatient {
+public class PatientAuthenticationService {
     @Autowired
     private PatientRepository patientRepository;
 
@@ -23,7 +22,7 @@ public class AuthenticationServicePatient {
     private PatientDetailsService patientDetailsService;
 
     @Autowired
-    private JwtServicePatient jwtService;
+    private PatientJwtService jwtService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

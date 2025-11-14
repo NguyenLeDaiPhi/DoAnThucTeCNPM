@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class DoctorAndCommonSecurityConfiguration {
 
     @Autowired
-    private JwtFilterDoctor jwtFilter;
+    private DoctorJwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

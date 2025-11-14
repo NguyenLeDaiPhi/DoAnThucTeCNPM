@@ -9,18 +9,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.e_health_care.web.doctor.dto.DoctorDTO;
-import com.e_health_care.web.doctor.service.AuthenticationServiceDoctor;
-import com.e_health_care.web.patient.dto.PatientDTO;
+import com.e_health_care.web.doctor.service.DoctorAuthenticationService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/doctor")
-public class AuthenticationControllerDoctor {
+public class DoctorAuthenticationController {
 
     @Autowired
-    private AuthenticationServiceDoctor authService;
+    private DoctorAuthenticationService authService;
 
     @GetMapping("/login") 
     public String showLoginPage(Model model) {

@@ -2,7 +2,7 @@ package com.e_health_care.web.patient.service;
 
 import com.e_health_care.web.patient.dto.AppointmentRequestDTO;
 import com.e_health_care.web.patient.model.Appointment;
-import com.e_health_care.web.patient.repository.AppointmentRepository;
+import com.e_health_care.web.patient.repository.PatientAppointmentRepository;
 import com.e_health_care.web.doctor.model.Doctor;
 import com.e_health_care.web.doctor.repository.DoctorRepository;
 import com.e_health_care.web.patient.model.Patient;
@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AppointmentService {
+public class PatientAppointmentService {
 
     @Autowired
-    private AppointmentRepository appointmentRepository;
+    private PatientAppointmentRepository appointmentRepository;
 
     @Autowired
     private PatientRepository patientRepository;

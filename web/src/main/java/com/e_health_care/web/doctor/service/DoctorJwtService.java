@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class JwtServiceDoctor {
+public class DoctorJwtService {
 
     // Use a static, stable secret key. This should ideally be in application.properties.
     // This key MUST be long and secure for a production environment.

@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.e_health_care.web.patient.service.JwtServicePatient;
+import com.e_health_care.web.patient.service.PatientJwtService;
 import com.e_health_care.web.patient.service.PatientDetailsService;
 
 import jakarta.servlet.FilterChain;
@@ -21,10 +21,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JwtFilterPatient extends OncePerRequestFilter {
+public class PatientJwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtServicePatient jwtServicePatient;
+    private PatientJwtService jwtServicePatient;
 
     @Autowired
     private PatientDetailsService patientDetailsService;

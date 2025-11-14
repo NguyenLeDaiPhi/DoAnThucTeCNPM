@@ -3,7 +3,7 @@ package com.e_health_care.web.patient.controller;
 import com.e_health_care.web.patient.dto.PatientDTO;
 import com.e_health_care.web.patient.model.Patient;
 import com.e_health_care.web.patient.repository.PatientRepository;
-import com.e_health_care.web.patient.service.PatientService;
+import com.e_health_care.web.patient.service.PatientUpdateProfileService;
 
 import java.security.Principal;
 
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/patient")
-public class PatientController {
-    @Autowired private PatientService patientService;
+public class PatientUpdateProfileController {
+    @Autowired private PatientUpdateProfileService patientService;
     @Autowired private PatientRepository patientRepository;
 
     @GetMapping("/update/{id}")

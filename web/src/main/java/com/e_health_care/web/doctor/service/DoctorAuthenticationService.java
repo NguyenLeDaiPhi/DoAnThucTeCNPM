@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.e_health_care.web.doctor.dto.DoctorDTO;
 
 @Service
-public class AuthenticationServiceDoctor {
+public class DoctorAuthenticationService {
 
     @Autowired
     private DoctorDetailsService doctorDetailsService;
@@ -22,7 +22,7 @@ public class AuthenticationServiceDoctor {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private JwtServiceDoctor jwtService;
+    private DoctorJwtService jwtService;
     
     public String verify(DoctorDTO doctorDTO) {
         try {

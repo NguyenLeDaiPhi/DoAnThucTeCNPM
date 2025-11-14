@@ -16,11 +16,11 @@ import io.jsonwebtoken.security.Keys;
 
 
 @Service
-public class JwtServicePatient {
+public class PatientJwtService {
     private static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347438";
 
     public String generateToken(String email) {
-        Map<String, Object> claims = new HashMap();
+        Map<String, Object> claims = new HashMap<>();
             return Jwts.builder()
                     .claims(claims)
                     .subject(email)
