@@ -1,21 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Dashboard</title>
-    <!-- Re-using login.css for some basic styling -->
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <style>
+        /* ========== Tổng thể ========== */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #5ca0f2, #3c82e6);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========== Header ========== */
+        header {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
+            color: #007bff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            margin-left: 20px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* ========== Container chính ========== */
+        main {
+            flex: 1; /* chiếm hết không gian trống để đẩy footer xuống */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .dashboard-container {
+            width: 450px;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .dashboard-container img {
+            width: 80px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .profile-info {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .profile-info p {
+            margin: 8px 0;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .profile-info strong {
+            color: #007bff;
+        }
+
+        .action-links {
+            margin-top: 25px;
+        }
+
+        .action-links a, .action-links button {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .action-links a:hover, .action-links button:hover {
+            background-color: #0056b3;
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            font-size: 14px;
+            margin-top: auto; /* giữ footer ở đáy trang */
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Welcome, Patient!</h2>
-        <p>You have successfully registered. You can now log in.</p>
+    <header>
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/4320/4320337.png" alt="Logo" width="45" class="me-2">
+            <span>MediCare System</span>
+        </div>
+        <nav>
+            <a th:href="@{/home}">Trang chủ</a>
+            <a th:href="@{/contact}">Liên hệ</a>
+        </nav>
+    </header>
 
-        <!-- A simple static logout form that posts to the logout endpoint -->
-        <form action="/patient/login" method="get" style="margin-top: 2rem;">
-            <button type="submit">Go to Login</button>
-        </form>
-    </div>
+    <main>
+        <div class="dashboard-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/2922/2922564.png" alt="Patient Icon" width="80">
+            <h2>Welcome, <span th:text="${patient.lastName}">Patient</span>!</h2>
+
+            <div class="profile-info">
+                <p><strong>Full Name:</strong> <span th:text="${patient.firstName + ' ' + patient.lastName}"></span></p>
+                <p><strong>Email:</strong> <span th:text="${patient.email}"></span></p>
+                <p><strong>Address:</strong> <span th:text="${patient.address}"></span></p>
+                <p><strong>Phone:</strong> <span th:text="${patient.phone}"></span></p>
+            </div>
+
+            <div class="action-links">
+                <a th:href="@{/patient/update/{id}(id=${patient.id})}">Update Profile</a>
+                <form th:action="@{/patient/logout}" method="post" style="display:inline;">
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © 2025 MediCare System. All rights reserved.
+    </footer>
 </body>
 </html>
