@@ -1,0 +1,163 @@
+/* ========== Tổng thể ========== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #5b86e5, #36d1dc);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========== Header ========== */
+.header {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 60px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 20px;
+    color: #007bff;
+}
+
+.logo img {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+}
+
+.nav-links .nav-link {
+    color: #666;
+    margin-left: 25px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.nav-links .nav-link:hover {
+    color: #007bff;
+}
+
+/* ========== Nền form ========== */
+.background {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ========== Form Container ========== */
+.form-container {
+    width: 400px;
+    background: #fff;
+    padding: 35px 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* ========== Tiêu đề form ========== */
+.form-header img.patient-icon {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+.form-header h2 {
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.form-header p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* ========== Form group ========== */
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #007bff;
+}
+
+/* ========== Password wrapper ========== */
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+}
+
+/* ========== Nút cập nhật ========== */
+.btn {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* ========== Thông báo thành công ========== */
+.success-message {
+    margin-top: 10px;
+    color: #2e7d32;
+    background: #e8f5e9;
+    border: 1px solid #81c784;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+/* ========== Link quay lại ========== */
+.bottom-links {
+    margin-top: 20px;
+}
+
+.bottom-links a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.bottom-links a:hover {
+    text-decoration: underline;
+}

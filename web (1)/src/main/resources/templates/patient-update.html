@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Update | MediCare System</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4a90e2, #5dade2);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header img {
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        header h1 {
+            font-size: 22px;
+            color: #007bff;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .update-box {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 420px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .update-box img {
+            width: 60px;
+            margin-bottom: 15px;
+        }
+
+        .update-box h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            color: #555;
+            border-top: 1px solid #ddd;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="https://cdn-icons-png.flaticon.com/512/4320/4320337.png" alt="Logo" width="45" class="me-2">
+    <h1>MediCare System</h1>
+</header>
+
+<div class="container">
+    <div class="update-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/2922/2922564.png" alt="Patient Icon" width="70">
+        <h2>Cập nhật thông tin bệnh nhân</h2>
+
+        <form th:action="@{/patient/update}" method="post">
+            <div class="form-group">
+                <label for="fullname">Họ và tên</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mật khẩu mới</label>
+                <input type="password" id="password" name="password">
+            </div>
+
+            <button type="submit">Cập nhật thông tin</button>
+        </form>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 MediCare System. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
