@@ -17,7 +17,7 @@ public class DoctorPrinciple implements UserDetails {
 
      @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("DOCTOR"));
+        return Collections.singleton(new SimpleGrantedAuthority(doctor.getROLE()));
     }
 
     @Override

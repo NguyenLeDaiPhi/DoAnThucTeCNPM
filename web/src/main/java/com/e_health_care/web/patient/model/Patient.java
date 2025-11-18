@@ -7,24 +7,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data
+import java.time.LocalDate; // Example for date of birth
+
 @Entity
-@Table(name = "patient")
+@Table(name = "Patient")
+@Data
 public class Patient {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
-	private String email;
-	private String firstName;
-	private String lastName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String address;
 	private String password;
-	private String address;
-	private int phone;
-
-	// getter
-	public Long getId() {
-		return id;
-	}
-
+    private String phone;
+    private LocalDate dateOfBirth; // Example field
+    private String medicalHistory; // Example field for records
+    // Add other relevant patient fields as needed
 }

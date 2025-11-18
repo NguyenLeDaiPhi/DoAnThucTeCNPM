@@ -32,6 +32,14 @@
             <input id="phone" th:field="*{phone}" placeholder="Nhập số điện thoại">
         </div>
         <div class="form-group">
+            <label for="dateOfBirth">Date of Birth</label>
+            <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}" />
+        </div>
+        <div class="form-group">
+            <label for="medicalHistory">Medical History</label>
+            <textarea class="form-control" id="medicalHistory" rows="4" th:field="*{medicalHistory}"></textarea>
+        </div>
+        <div class="form-group">
             <label for="password">Mật khẩu</label>
             <div class="password-wrapper">
                 <input type="password" id="password" th:field="*{password}" placeholder="Nhập mật khẩu mới">

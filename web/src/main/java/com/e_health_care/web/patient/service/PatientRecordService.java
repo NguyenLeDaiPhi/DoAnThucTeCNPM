@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.e_health_care.web.doctor.model.Doctor;
 import com.e_health_care.web.doctor.repository.DoctorRepository;
 import com.e_health_care.web.patient.dto.PatientClinicalInforDTO;
+import com.e_health_care.web.patient.dto.PatientDTO;
 import com.e_health_care.web.patient.model.Patient;
 import com.e_health_care.web.patient.model.PatientClinicalInfor;
 import com.e_health_care.web.patient.repository.PatientClinicalInforRepository;

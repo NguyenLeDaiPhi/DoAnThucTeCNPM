@@ -36,7 +36,7 @@ public class PatientAuthenticationService {
         patient.setFirstName(patientDTO.getFirstName());
         patient.setLastName(patientDTO.getLastName());
         patient.setAddress(patientDTO.getAddress());
-        patient.setPhone(patientDTO.getPhone());
+        patient.setPhone(String.valueOf(patientDTO.getPhone()));
         patient.setPassword(passwordEncoder.encode(patientDTO.getPassword()));
         return patientRepository.save(patient);
     }

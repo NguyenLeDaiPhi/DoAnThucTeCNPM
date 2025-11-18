@@ -1,11 +1,10 @@
 package com.e_health_care.web.patient.repository;
 
-import java.util.Optional;
-
+import com.e_health_care.web.patient.model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.e_health_care.web.patient.model.Patient;
+import java.util.Optional;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {

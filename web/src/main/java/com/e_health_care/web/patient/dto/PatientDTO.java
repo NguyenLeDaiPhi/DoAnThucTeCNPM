@@ -1,5 +1,7 @@
 package com.e_health_care.web.patient.dto;
 
+import java.time.LocalDate;
+
 import lombok.Data;
 
 @Data
@@ -17,4 +19,7 @@ public class PatientDTO {
     public String getUppercase_role() {
         return this.role.toUpperCase();
     }
+
+    private LocalDate dateOfBirth; // Example field
+    private String medicalHistory; // Example field for records
 }

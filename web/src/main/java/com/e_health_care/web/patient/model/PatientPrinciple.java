@@ -61,12 +61,12 @@ public class PatientPrinciple implements UserDetails {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         PatientPrinciple that = (PatientPrinciple) obj;
-        // return patient != null ? patient.getId().equals(that.patient.getId()) : that.patient == null;
-        return patient != null ? patient.getId().equals(that.patient.getId()) : that.patient == null;
+        // return patient != null ? patient.getId() == that.patient.getId() : that.patient == null;
+        return patient != null ? patient.getId() == that.patient.getId() : that.patient == null;
     }
 
     @Override
     public int hashCode() {
-        return patient != null ? patient.getId().hashCode() : 0;
+        return patient != null ? Long.hashCode(patient.getId()) : 0;
     }
 }

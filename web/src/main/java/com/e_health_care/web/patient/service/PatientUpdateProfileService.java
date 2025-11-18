@@ -1,8 +1,12 @@
 package com.e_health_care.web.patient.service;
 
 import com.e_health_care.web.patient.dto.PatientDTO;
+import com.e_health_care.web.patient.dto.PatientSummaryDTO;
 import com.e_health_care.web.patient.model.Patient;
 import com.e_health_care.web.patient.repository.PatientRepository;
+
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,9 +35,10 @@ public class PatientUpdateProfileService {
         patient.setFirstName(dto.getFirstName());
         patient.setLastName(dto.getLastName());
         patient.setAddress(dto.getAddress());
-        patient.setPhone(dto.getPhone());
+        patient.setPhone(String.valueOf(dto.getPhone()));
         patient.setEmail(dto.getEmail());
-        patient.setPassword(dto.getPassword());
+        patient.setDateOfBirth(dto.getDateOfBirth());
+        patient.setMedicalHistory(dto.getMedicalHistory());
 
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
             patient.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -41,5 +46,4 @@ public class PatientUpdateProfileService {
 
         patientRepository.save(patient);
     }
-
 }
