@@ -2,8 +2,6 @@ package com.e_health_care.web.patient.model;
 
 import java.time.LocalDateTime;
 
-import com.e_health_care.web.doctor.model.Doctor;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,10 +40,6 @@ public class PatientClinicalInfor {
     @Lob
     @Column(name = "family_medical_history")
     private String familyMedicalHistory;
-
-    @ManyToOne
-    @JoinColumn(name = "last_updated_by_id", referencedColumnName = "id")
-    private Doctor doctor;
 
     @Column(name = "last_updated_at")
     private LocalDateTime lastUpDatedTime;

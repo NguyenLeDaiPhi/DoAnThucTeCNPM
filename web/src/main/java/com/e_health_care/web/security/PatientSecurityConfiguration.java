@@ -27,7 +27,7 @@ public class PatientSecurityConfiguration {
                 .addFilterBefore(jwtFilterPatient, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/patient/login", "/patient/register", "/patient/success", "/css/**", "/js/**", "/images/**", "/").permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 );
         return http.build();
     }

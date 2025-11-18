@@ -1,5 +1,7 @@
 package com.e_health_care.web.patient.dto;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 
 @Data
@@ -11,4 +13,5 @@ public class PatientClinicalInforDTO {
     private String chronicDiseases;
     private String familyMedicalHistory;
     private Long lastUpdatedById; 
+    private LocalDateTime lastUpDatedTime;
 }

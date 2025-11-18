@@ -25,11 +25,11 @@ public class DoctorViewPatientRecordController {
     @Autowired
     private DoctorRepository doctorRepository;
     
-    @GetMapping("/list-patients")
+    @GetMapping("/dashboard")
     public String viewPatientClinical(Model model) {
         List<PatientSummaryDTO> patients = doctorViewPatientService.getAllPatients();
         model.addAttribute("patients", patients);
-        return "doctor-index";
+        return "doctor-dashboard";
     }
 
     @GetMapping("/patient/{id}")
@@ -42,6 +42,7 @@ public class DoctorViewPatientRecordController {
         model.addAttribute("clinicalInforDTO", clinicalInforDTO);
         List<Doctor> doctors = doctorRepository.findAll();
         model.addAttribute("doctors", doctors);
+        model.addAttribute("isDoctorView", true);
         return "patient-clinical-info";
     }
 }

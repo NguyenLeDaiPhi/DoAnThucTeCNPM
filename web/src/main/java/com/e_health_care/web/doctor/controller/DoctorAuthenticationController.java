@@ -39,7 +39,7 @@ public class DoctorAuthenticationController {
             cookie.setPath("/");
             // cookie.setSecure(true); // Enable this in production (HTTPS)
             response.addCookie(cookie);
-            return "redirect:/doctor/index";
+            return "redirect:/doctor/dashboard";
         } else {
             // On failure, redirect back to the login page with an error flag
             return "redirect:/doctor/login?error";
@@ -55,11 +55,5 @@ public class DoctorAuthenticationController {
         cookie.setMaxAge(0); // This effectively deletes the cookie
         response.addCookie(cookie);
         return "redirect:/doctor/login?logout";
-    }
-
-    @GetMapping("/index")
-    public String doctorIndex() {
-        // This will serve the doctor-index.html template
-        return "doctor-index";
     }
 }
