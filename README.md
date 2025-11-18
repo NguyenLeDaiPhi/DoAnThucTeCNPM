@@ -1,2 +1,2 @@
-# DoAnThucTeCNPM
-This is private github for invited members to manange files repository. 
+# LapTrinhMang
+Repository nhằm phục vụ cho môn Lập Trình Mạng (Giảng viên phụ trách môn học: Mai Ngọc Châu).
