@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/patient")
 public class PatientUpdateProfileController {
@@ -36,11 +38,15 @@ public class PatientUpdateProfileController {
     }
     
     @GetMapping("/index")
-    public String patientIndex(Model model, Principal principal) {
+    public String patientIndex(Model model, Principal principal, HttpServletRequest request) {
         String email = principal.getName();
         Patient patient = patientRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
         model.addAttribute("patient", patient);
-        return "patient-success";
+
+        // Get token from request attribute (set in JwtFilter) and add to model
+        model.addAttribute("patientToken", request.getAttribute("patientToken"));
+
+        return "patient-success";   
     }
 }

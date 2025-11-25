@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,14 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class PatientJwtService {
-    private static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347438";
+    
+    @Value("${jwt.patient.secret}")
+    private String SECRET;
 
     public String generateToken(String email) {
         Map<String, Object> claims = new HashMap<>();
+        // Add the role claim for the patient
+        claims.put("role", "ROLE_PATIENT");
             return Jwts.builder()
                     .claims(claims)
                     .subject(email)
@@ -40,6 +45,11 @@ public class PatientJwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractRole(String token) {
+        // Extract the role claim from the JWT token
+        return extractClaim(token, claims -> claims.get("role", String.class));
+    }
+
     private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
@@ -57,7 +67,11 @@ public class PatientJwtService {
 
     public boolean validateToken(String token, UserDetails userDetails) {
         final String email = extractEmail(token);
-        return email.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        final String role = extractRole(token);
+        // Check if email matches, token is not expired, AND the role is correct
+        return email.equals(userDetails.getUsername()) 
+                && "ROLE_PATIENT".equals(role) 
+                && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

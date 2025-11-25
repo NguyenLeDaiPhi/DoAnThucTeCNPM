@@ -40,7 +40,7 @@ public class DoctorJwtFilter extends OncePerRequestFilter{
 
         if (request.getCookies() != null) {
             token = Arrays.stream(request.getCookies())
-                    .filter(cookie -> cookie.getName().equals("jwt-token"))
+                    .filter(cookie -> cookie.getName().equals("jwt-doctor-token"))
                     .map(Cookie::getValue)
                     .findFirst()
                     .orElse(null);
@@ -57,12 +57,15 @@ public class DoctorJwtFilter extends OncePerRequestFilter{
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                    
+                    // Add the token to the request attribute so controllers can access it
+                    request.setAttribute("doctorToken", token);
                 }
             }
             filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             // Token has expired. Clear the cookie and redirect to the login page.
-            Cookie cookie = new Cookie("jwt-token", null);
+            Cookie cookie = new Cookie("jwt-doctor-token", null);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             cookie.setMaxAge(0);
