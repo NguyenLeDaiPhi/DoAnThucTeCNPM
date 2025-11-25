@@ -34,7 +34,7 @@ public class DoctorAuthenticationController {
 
         if (token != null) {
             // On success, create a secure, http-only cookie
-            Cookie cookie = new Cookie("jwt-token", token);
+            Cookie cookie = new Cookie("jwt-doctor-token", token);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             // cookie.setSecure(true); // Enable this in production (HTTPS)
@@ -49,7 +49,7 @@ public class DoctorAuthenticationController {
     @PostMapping("/logout")
     public String logout(HttpServletResponse response) {
         // Create a cookie that expires immediately to clear the existing one
-        Cookie cookie = new Cookie("jwt-token", null);
+        Cookie cookie = new Cookie("jwt-doctor-token", null);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge(0); // This effectively deletes the cookie

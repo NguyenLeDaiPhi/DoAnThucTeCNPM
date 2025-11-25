@@ -41,7 +41,7 @@ public class PatientJwtFilter extends OncePerRequestFilter {
         // 1. Extract token from cookie
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
-                if ("jwt-token-patient".equals(cookie.getName())) {
+                if ("jwt-patient-token".equals(cookie.getName())) {
                     jwt = cookie.getValue();
                 }
             }
@@ -64,6 +64,9 @@ public class PatientJwtFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+
+                // Add the token to the request attribute so controllers can access it
+                request.setAttribute("patientToken", jwt);
             }
         }
         filterChain.doFilter(request, response);

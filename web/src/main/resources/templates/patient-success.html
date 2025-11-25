@@ -27,12 +27,12 @@
             <a th:href="@{/patient/appointment/book}" class="btn btn-primary">Đặt Lịch Khám</a>
             <a th:href="@{/patient/appointment/list}" class="btn btn-info">Xem Lịch Hẹn</a>
         </div>
-        <div class="action-links">
-            <a th:href="@{/patient/update/{id}(id=${patient.id})}">Update Profile</a>
-            <form th:action="@{/patient/logout}" method="post">
-                <button type="submit">Logout</button>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
+                <div class="action-links">
+                    <a th:href="@{/patient/update/{id}(id=${patient.id})}">Update Profile</a>
+                    <a th:href="@{'http://localhost:3000/?token=' + ${patientToken}}" target="_blank">Chat</a>
+                    <form th:action="@{/patient/logout}" method="post">
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </body></html>

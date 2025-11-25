@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.e_health_care.web.doctor.service.DoctorViewPatientService;
 import com.e_health_care.web.patient.dto.PatientSummaryDTO;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -26,9 +27,13 @@ public class DoctorViewPatientRecordController {
     private DoctorRepository doctorRepository;
     
     @GetMapping("/dashboard")
-    public String viewPatientClinical(Model model) {
+    public String viewPatientClinical(Model model, HttpServletRequest request) {
         List<PatientSummaryDTO> patients = doctorViewPatientService.getAllPatients();
         model.addAttribute("patients", patients);
+        
+        // Get token from request attribute (set in JwtFilter) and add to model
+        model.addAttribute("doctorToken", request.getAttribute("doctorToken"));
+
         return "doctor-dashboard";
     }
 

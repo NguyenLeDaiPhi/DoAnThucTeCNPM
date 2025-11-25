@@ -49,7 +49,7 @@ public class PatientAuthenticationController {
         String token = authServicePatient.verify(patientDTO);
 
         if (token != null) {
-            Cookie cookie = new Cookie("jwt-token-patient", token);
+            Cookie cookie = new Cookie("jwt-patient-token", token);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
             // cookie.setSecure(true); // Enable in production (HTTPS)
@@ -62,7 +62,7 @@ public class PatientAuthenticationController {
 
     @PostMapping("/logout")
     public String logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie("jwt-token-patient", null);
+        Cookie cookie = new Cookie("jwt-patient-token", null);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge(0);
