@@ -6,43 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.e_health_care.web.patient.dto.PatientClinicalInforDTO;
-import com.e_health_care.web.patient.model.Patient;
-import com.e_health_care.web.patient.model.PatientClinicalInfor;
 import com.e_health_care.web.patient.repository.PatientClinicalInforRepository;
-import com.e_health_care.web.patient.repository.PatientRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class PatientRecordService {
-    @Autowired
-    private PatientRepository patientRepository;
 
     @Autowired
     private PatientClinicalInforRepository inforRepository;
-
-    @Transactional
-    public PatientClinicalInfor updateClinicalRecord(Long patientId, PatientClinicalInforDTO inforDTO, Long updaterId) {
-        PatientClinicalInfor patientClinicalInfor = inforRepository.findByPatientId(patientId)
-            .orElseGet(() -> {
-                Patient patient = patientRepository.findById(patientId)
-                    .orElseThrow(() -> new RuntimeException("Patient not found with ID: " + patientId));
-
-                PatientClinicalInfor newInfor = new PatientClinicalInfor();
-                newInfor.setPatient(patient);
-                return newInfor;
-        });
-        // Update Data Field
-        patientClinicalInfor.setAllergies(inforDTO.getAllergies());
-        patientClinicalInfor.setBloodType(inforDTO.getBloodType());
-        patientClinicalInfor.setChronicDiseases(inforDTO.getChronicDiseases());
-        patientClinicalInfor.setFamilyMedicalHistory(inforDTO.getFamilyMedicalHistory());
-
-        // Record Audit Information
-        patientClinicalInfor.setLastUpDatedTime(LocalDateTime.now());
-
-        return inforRepository.save(patientClinicalInfor);
-    }
 
     public PatientClinicalInforDTO getClinicalForEdit(Long patientId) {
         return inforRepository.findByPatientId(patientId)

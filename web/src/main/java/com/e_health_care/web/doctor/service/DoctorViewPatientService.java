@@ -1,14 +1,20 @@
 package com.e_health_care.web.doctor.service;
 
+import com.e_health_care.web.doctor.model.Doctor;
+import com.e_health_care.web.doctor.repository.DoctorRepository;
 import com.e_health_care.web.patient.dto.PatientClinicalInforDTO;
+import com.e_health_care.web.patient.dto.PatientDTO;
+import com.e_health_care.web.patient.model.Patient;
 import com.e_health_care.web.patient.model.PatientClinicalInfor;
 import com.e_health_care.web.patient.repository.PatientClinicalInforRepository;
+import com.e_health_care.web.patient.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.e_health_care.web.patient.dto.PatientSummaryDTO;
-import com.e_health_care.web.patient.repository.PatientRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +25,8 @@ public class DoctorViewPatientService {
     private PatientRepository patientRepository;
     @Autowired
     private PatientClinicalInforRepository patientClinicalInforRepository;
-
+    @Autowired
+    private DoctorRepository doctorRepository;
 
     public List<PatientSummaryDTO> getAllPatients() {
         return patientRepository.findAll()
@@ -45,15 +52,48 @@ public class DoctorViewPatientService {
             dto.setAllergies(clinicalInfor.getAllergies());
             dto.setChronicDiseases(clinicalInfor.getChronicDiseases());
             dto.setFamilyMedicalHistory(clinicalInfor.getFamilyMedicalHistory());
-            if (clinicalInfor.getLastUpDatedTime() != null) {
-                // convert LocalDateTime to epoch millis to match Long parameter
-                dto.setLastUpdatedById(clinicalInfor.getLastUpDatedTime()
-                    .atZone(java.time.ZoneId.systemDefault())
-                    .toInstant()
-                    .toEpochMilli());
-            }
+            dto.setLastUpDatedTime(clinicalInfor.getLastUpDatedTime());
             return dto;
         }
         return null;
+    }
+
+    public PatientDTO getPatientProfile(Long patientId) {
+        Optional<Patient> patientOpt = patientRepository.findById(patientId);
+        if (patientOpt.isPresent()) {
+            Patient patient = patientOpt.get();
+            PatientDTO dto = new PatientDTO();
+            dto.setId(patient.getId());
+            dto.setEmail(patient.getEmail());
+            dto.setFirstName(patient.getFirstName());
+            dto.setLastName(patient.getLastName());
+            dto.setAddress(patient.getAddress());
+            dto.setPhone(patient.getPhone());
+            dto.setDateOfBirth(patient.getDateOfBirth());
+            return dto;
+        }
+        return null;
+    }
+
+    public void updatePatientClinicalInfo(Long patientId, PatientClinicalInforDTO clinicalInforDTO, String doctorEmail) {
+        Doctor doctor = doctorRepository.findByEmail(doctorEmail);
+        if (doctor == null) {
+            throw new UsernameNotFoundException("Doctor not found with email: " + doctorEmail);
+        }
+
+        PatientClinicalInfor clinicalInfor = patientClinicalInforRepository.findByPatientId(patientId)
+                .orElse(new PatientClinicalInfor());
+
+        clinicalInfor.setBloodType(clinicalInforDTO.getBloodType());
+        clinicalInfor.setAllergies(clinicalInforDTO.getAllergies());
+        clinicalInfor.setChronicDiseases(clinicalInforDTO.getChronicDiseases());
+        clinicalInfor.setFamilyMedicalHistory(clinicalInforDTO.getFamilyMedicalHistory());
+        clinicalInfor.setLastUpDatedTime(LocalDateTime.now());
+
+        if (clinicalInfor.getPatient() == null) {
+            patientRepository.findById(patientId).ifPresent(clinicalInfor::setPatient);
+        }
+
+        patientClinicalInforRepository.save(clinicalInfor);
     }
 }

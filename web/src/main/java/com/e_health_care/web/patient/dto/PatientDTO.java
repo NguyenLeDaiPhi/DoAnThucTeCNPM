@@ -12,7 +12,7 @@ public class PatientDTO {
     private String firstName;
     private String lastName;
     private String address;
-    private int phone;
+    private String phone;
 
     private String role = "patient";
 

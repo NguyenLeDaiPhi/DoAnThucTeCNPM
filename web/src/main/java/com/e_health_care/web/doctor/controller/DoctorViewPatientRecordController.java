@@ -3,11 +3,15 @@ package com.e_health_care.web.doctor.controller;
 import com.e_health_care.web.doctor.model.Doctor;
 import com.e_health_care.web.doctor.repository.DoctorRepository;
 import com.e_health_care.web.patient.dto.PatientClinicalInforDTO;
+
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.e_health_care.web.doctor.service.DoctorViewPatientService;
@@ -45,9 +49,21 @@ public class DoctorViewPatientRecordController {
             clinicalInforDTO.setPatientId(patientId);
         }
         model.addAttribute("clinicalInforDTO", clinicalInforDTO);
+        
+        // Add patient profile to the model
+        com.e_health_care.web.patient.dto.PatientDTO patientDTO = doctorViewPatientService.getPatientProfile(patientId);
+        model.addAttribute("patientDTO", patientDTO);
+        
         List<Doctor> doctors = doctorRepository.findAll();
         model.addAttribute("doctors", doctors);
         model.addAttribute("isDoctorView", true);
         return "patient-clinical-info";
+    }
+
+    @PostMapping("/patient/{id}")
+    public String updatePatientClinicalRecord(@PathVariable("id") Long patientId, PatientClinicalInforDTO clinicalInforDTO, Model model, Principal principal) {
+        doctorViewPatientService.updatePatientClinicalInfo(patientId, clinicalInforDTO, principal.getName());
+        model.addAttribute("success", "Đã cập nhật hồ sơ bệnh án thành công.");
+        return viewPatientClinicalRecord(patientId, model);
     }
 }

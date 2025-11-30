@@ -20,6 +20,10 @@ public class DoctorPrinciple implements UserDetails {
         return Collections.singleton(new SimpleGrantedAuthority(doctor.getROLE()));
     }
 
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
     @Override
     public String getPassword() {
         return doctor.getPassword();

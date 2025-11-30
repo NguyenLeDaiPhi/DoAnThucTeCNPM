@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -31,18 +30,18 @@ public class PatientAppointmentController {
 
     // TODO: Cần implement cách lấy patientId từ JWT token hoặc SecurityContext sau khi login
     // Giả sử có method helper để lấy current patient ID từ request
-    private Long getCurrentPatientId(HttpServletRequest request) {
+    private Long getCurrentPatientId() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getPrincipal() instanceof PatientPrinciple principle) {
             return principle.getPatient().getId();
         }
-        return 1L;
+        return null;
     }
 
     @GetMapping("/book")
-    public String bookForm(Model model, HttpServletRequest request) {
+    public String bookForm(Model model) {
         AppointmentRequestDTO requestDTO = new AppointmentRequestDTO();
-        requestDTO.setPatientId(getCurrentPatientId(request)); // Set patientId từ context
+        requestDTO.setPatientId(getCurrentPatientId()); // Set patientId từ context
         model.addAttribute("request", requestDTO);
 
         // Load danh sách bác sĩ để chọn
@@ -53,9 +52,9 @@ public class PatientAppointmentController {
     }
 
     @PostMapping("/book")
-    public String bookAppointment(@ModelAttribute AppointmentRequestDTO requestDTO, Model model, HttpServletRequest req) {
+    public String bookAppointment(@ModelAttribute AppointmentRequestDTO requestDTO, Model model) {
         // Đảm bảo patientId được set đúng
-        requestDTO.setPatientId(getCurrentPatientId(req));
+        requestDTO.setPatientId(getCurrentPatientId());
 
         try {
             appointmentService.bookAppointment(requestDTO);
@@ -72,12 +71,11 @@ public class PatientAppointmentController {
     }
 
     @GetMapping("/list")
-    public String listAppointments(Model model, HttpServletRequest request) {
+    public String listAppointments(Model model) {
         System.out.println("✅ listAppointments() đã được gọi!");
-        Long patientId = getCurrentPatientId(request);
+        Long patientId = getCurrentPatientId();
         List<Appointment> appointments = appointmentService.getAppointmentsByPatient(patientId);
         model.addAttribute("appointments", appointments);
         return "patient-appointment-list"; // Template hiển thị danh sách lịch hẹn
     }
-
 }

@@ -7,8 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-
 public class PatientPrinciple implements UserDetails {
+    
     private Patient patient;
 
     public PatientPrinciple(Patient patient) {

@@ -9,6 +9,46 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+            <!-- Patient Profile -->
+            <div class="card mb-4" th:if="${patientDTO != null}">
+                <div class="card-header">
+                    <h3 class="text-center">Hồ sơ người bệnh</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Họ và tên</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="${patientDTO.firstName + ' ' + patientDTO.lastName}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="${patientDTO.email}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Ngày sinh</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="${patientDTO.dateOfBirth != null ? #temporals.format(patientDTO.dateOfBirth, 'dd-MM-yyyy') : ''}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Địa chỉ</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="${patientDTO.address}"></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label">Số điện thoại</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-plaintext" th:text="${patientDTO.phone}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <h3 class="text-center">Hồ Sơ Bệnh Án</h3>
@@ -24,63 +64,37 @@
                         <p th:text="${error}"></p>
                     </div>
 
-                    <!-- Patient Edit View -->
-                    <div th:if="${!isDoctorView}">
-                        <form th:action="@{/patient/clinical-infor/{id}(id=${clinicalInforDTO.patientId})}" th:object="${clinicalInforDTO}" method="post">
-                            <input type="hidden" th:field="*{patientId}" />
+                    <form th:action="@{/doctor/patient/{id}(id=${clinicalInforDTO.patientId})}" th:object="${clinicalInforDTO}" method="post">
+                        <input type="hidden" th:field="*{patientId}" />
 
-                            <div class="mb-3">
-                                <label for="bloodType" class="form-label">Nhóm Máu</label>
-                                <input type="text" class="form-control" id="bloodType" th:field="*{bloodType}" placeholder="e.g., A+">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="allergies" class="form-label">Dị Ứng</label>
-                                <textarea class="form-control" id="allergies" rows="3" th:field="*{allergies}" placeholder="Liệt kê các dị ứng đã biết"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="chronicDiseases" class="form-label">Bệnh Mãn Tính</label>
-                                <textarea class="form-control" id="chronicDiseases" rows="3" th:field="*{chronicDiseases}" placeholder="Liệt kê các bệnh mãn tính"></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="familyMedicalHistory" class="form-label">Tiền Sử Bệnh Gia Đình</label>
-                                <textarea class="form-control" id="familyMedicalHistory" rows="3" th:field="*{familyMedicalHistory}" placeholder="Liệt kê tiền sử bệnh của gia đình"></textarea>
-                            </div>
-
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Cập Nhật Hồ Sơ</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Doctor Read-Only View -->
-                    <div th:if="${isDoctorView}">
                         <div class="mb-3">
-                            <label class="form-label">Nhóm Máu</label>
-                            <p class="form-control-plaintext" th:text="${clinicalInforDTO.bloodType ?: '-'}"></p>
+                            <label for="bloodType" class="form-label">Nhóm Máu</label>
+                            <input type="text" class="form-control" id="bloodType" th:field="*{bloodType}" placeholder="e.g., A+" th:readonly="${!isDoctorView}">
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Dị Ứng</label>
-                            <p class="form-control-plaintext" th:text="${clinicalInforDTO.allergies ?: '-'}"></p>
+                            <label for="allergies" class="form-label">Dị Ứng</label>
+                            <textarea class="form-control" id="allergies" rows="3" th:field="*{allergies}" placeholder="Liệt kê các dị ứng đã biết" th:readonly="${!isDoctorView}"></textarea>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Bệnh Mãn Tính</label>
-                            <p class="form-control-plaintext" th:text="${clinicalInforDTO.chronicDiseases ?: '-'}"></p>
+                            <label for="chronicDiseases" class="form-label">Bệnh Mãn Tính</label>
+                            <textarea class="form-control" id="chronicDiseases" rows="3" th:field="*{chronicDiseases}" placeholder="Liệt kê các bệnh mãn tính" th:readonly="${!isDoctorView}"></textarea>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Tiền Sử Bệnh Gia Đình</label>
-                            <p class="form-control-plaintext" th:text="${clinicalInforDTO.familyMedicalHistory ?: '-'}"></p>
+                            <label for="familyMedicalHistory" class="form-label">Tiền Sử Bệnh Gia Đình</label>
+                            <textarea class="form-control" id="familyMedicalHistory" rows="3" th:field="*{familyMedicalHistory}" placeholder="Liệt kê tiền sử bệnh của gia đình" th:readonly="${!isDoctorView}"></textarea>
                         </div>
 
-                        <div class="alert alert-info" role="alert">
-                            <p>Bạn đang xem hồ sơ bệnh án của bệnh nhân. Chỉ bệnh nhân mới có thể chỉnh sửa thông tin này.</p>
+                        <div class="d-grid" th:if="${isDoctorView}">
+                            <button type="submit" class="btn btn-primary">Cập Nhật Hồ Sơ</button>
                         </div>
-                    </div>
+                        
+                        <div class="d-grid mt-3">
+                            <a th:href="${isDoctorView} ? @{/doctor/dashboard} : @{/patient/dashboard}" class="btn btn-secondary">Trở về</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
