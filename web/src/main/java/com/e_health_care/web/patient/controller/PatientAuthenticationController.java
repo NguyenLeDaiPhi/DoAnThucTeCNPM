@@ -7,41 +7,43 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.e_health_care.web.patient.dto.PatientDTO;
 import com.e_health_care.web.patient.service.PatientAuthenticationService;
-
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/patient")
 public class PatientAuthenticationController {
-    
+
     @Autowired
     private PatientAuthenticationService authServicePatient;
 
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("patient", new PatientDTO());
-        return "patient-register";
+        // SỬA: Thêm "patient/" vào trước tên file
+        return "patient/patient-register";
     }
 
     @PostMapping("/register")
     public String register(@ModelAttribute PatientDTO patientDTO) {
         authServicePatient.register(patientDTO);
+        // Redirect giữ nguyên vì nó trỏ đến URL, không phải file
         return "redirect:/patient/login";
     }
 
-    @GetMapping("/success") 
+    @GetMapping("/success")
     public String successForm() {
-        return "patient-success";
+        // SỬA: Thêm "patient/"
+        return "patient/patient-index";
     }
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("patient", new PatientDTO());
-        return "patient-login";
+        // SỬA: Thêm "patient/" để tìm file templates/patient/patient-login.html
+        return "patient/patient-login";
     }
 
     @PostMapping("/login")
@@ -52,7 +54,6 @@ public class PatientAuthenticationController {
             Cookie cookie = new Cookie("jwt-patient-token", token);
             cookie.setHttpOnly(true);
             cookie.setPath("/");
-            // cookie.setSecure(true); // Enable in production (HTTPS)
             response.addCookie(cookie);
             return "redirect:/patient/index";
         } else {
@@ -66,7 +67,7 @@ public class PatientAuthenticationController {
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge(0);
-        response.addCookie(cookie); 
+        response.addCookie(cookie);
         return "redirect:/patient/login?logout";
     }
 }

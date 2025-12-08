@@ -20,9 +20,9 @@ public class Patient {
     private String firstName;
     private String lastName;
     private String address;
-	private String password;
+    private String password;
     private String phone;
     private LocalDate dateOfBirth; // Example field
     private String medicalHistory; // Example field for records
-    // Add other relevant patient fields as needed
+    private String avatar;
 }
