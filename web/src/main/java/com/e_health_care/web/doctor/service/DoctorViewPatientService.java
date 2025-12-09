@@ -36,6 +36,12 @@ public class DoctorViewPatientService {
                 dto.setId(p.getId());
                 dto.setEmail(p.getEmail());
                 dto.setFullName(p.getFirstName() + " " + p.getLastName());
+                dto.setFirstName(p.getFirstName());
+                dto.setLastName(p.getLastName());
+                dto.setPhone(p.getPhone());
+                dto.setAddress(p.getAddress());
+                dto.setDateOfBirth(p.getDateOfBirth());
+                dto.setAvatar(p.getAvatar());
                 return dto;
             })
             .toList();
@@ -70,6 +76,7 @@ public class DoctorViewPatientService {
             dto.setAddress(patient.getAddress());
             dto.setPhone(patient.getPhone());
             dto.setDateOfBirth(patient.getDateOfBirth());
+            dto.setAvatar(patient.getAvatar());
             return dto;
         }
         return null;

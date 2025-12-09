@@ -1,5 +1,9 @@
 package com.e_health_care.web.doctor.controller;
 
+import com.e_health_care.web.doctor.dto.DoctorDTO;
+import com.e_health_care.web.doctor.service.DoctorAuthenticationService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,12 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.e_health_care.web.doctor.dto.DoctorDTO;
-import com.e_health_care.web.doctor.service.DoctorAuthenticationService;
-
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
-
 @Controller
 @RequestMapping("/doctor")
 public class DoctorAuthenticationController {
@@ -21,11 +19,12 @@ public class DoctorAuthenticationController {
     @Autowired
     private DoctorAuthenticationService authService;
 
-    @GetMapping("/login") 
+    @GetMapping("/login")
     public String showLoginPage(Model model) {
-        // Add an empty DoctorDTO to the model for the form to bind to
+        // Trang login thường dùng layout riêng (không có header chứa avatar bác sĩ)
+        // Nên không lo về biến global "doctor"
         model.addAttribute("doctor", new DoctorDTO());
-        return "doctor-login";
+        return "doctor/doctor-login";
     }
 
     @PostMapping("/login")
@@ -33,26 +32,25 @@ public class DoctorAuthenticationController {
         String token = authService.verify(doctorDTO);
 
         if (token != null) {
-            // On success, create a secure, http-only cookie
+            // Tạo cookie chứa JWT
             Cookie cookie = new Cookie("jwt-doctor-token", token);
             cookie.setHttpOnly(true);
+            cookie.setSecure(true); // Nên bật nếu chạy HTTPS
             cookie.setPath("/");
-            // cookie.setSecure(true); // Enable this in production (HTTPS)
+            cookie.setMaxAge(7 * 24 * 60 * 60); // Ví dụ: tồn tại 7 ngày
             response.addCookie(cookie);
-            return "redirect:/doctor/dashboard";
+            return "redirect:/doctor/index";
         } else {
-            // On failure, redirect back to the login page with an error flag
             return "redirect:/doctor/login?error";
         }
     }
 
     @PostMapping("/logout")
     public String logout(HttpServletResponse response) {
-        // Create a cookie that expires immediately to clear the existing one
         Cookie cookie = new Cookie("jwt-doctor-token", null);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
-        cookie.setMaxAge(0); // This effectively deletes the cookie
+        cookie.setMaxAge(0); // Xóa ngay lập tức
         response.addCookie(cookie);
         return "redirect:/doctor/login?logout";
     }
