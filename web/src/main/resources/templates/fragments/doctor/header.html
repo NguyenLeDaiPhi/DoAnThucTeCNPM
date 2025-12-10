@@ -44,7 +44,7 @@
 
                             <li><a th:href="@{/doctor/dashboard}">Patient List</a></li>
 
-                            <li><a th:href="@{/doctor/chat}">Chat</a></li>
+                            <li><a th:href="@{'http://localhost:3000/?token=' + ${doctorToken}}" target="_blank">Chat</a></li>
                             <li>
                                 <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit();">Logout</a>
                                 <form id="logoutForm" th:action="@{/doctor/logout}" method="post" style="display: none;"></form>

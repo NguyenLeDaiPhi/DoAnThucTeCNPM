@@ -39,7 +39,7 @@ public class DoctorAuthenticationController {
             cookie.setPath("/");
             cookie.setMaxAge(7 * 24 * 60 * 60); // Ví dụ: tồn tại 7 ngày
             response.addCookie(cookie);
-            return "redirect:/doctor/index";
+            return "redirect:/doctor/dashboard";
         } else {
             return "redirect:/doctor/login?error";
         }

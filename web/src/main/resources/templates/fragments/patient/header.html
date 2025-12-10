@@ -41,7 +41,7 @@
                         <li><a th:href="@{/patient/profile}">Profile</a></li>
                         <li><a th:href="@{/patient/clinical-infor/{id}(id=${patient.id})}">Medical Records</a></li>
                         <li><a th:href="@{/patient/appointment/list}">Appointment List</a></li>
-                        <li><a th:href="@{/patient/chat}">Chat</a></li>
+                        <li><a th:href="@{'http://localhost:3000/?token=' + ${patientToken}}" target="_blank">Chat</a></li>
 
                         <li>
                             <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit();">Logout</a>
