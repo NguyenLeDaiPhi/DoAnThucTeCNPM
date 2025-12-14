@@ -54,4 +54,8 @@ public class DoctorAuthenticationController {
         response.addCookie(cookie);
         return "redirect:/doctor/login?logout";
     }
+    @GetMapping("/index")
+    public String showIndex() {
+        return "doctor/doctor-index";
+    }
 }

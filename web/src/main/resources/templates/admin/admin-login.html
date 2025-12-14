@@ -11,7 +11,7 @@
     <div class="login-container">
         <!-- This form will POST to /doctor/login, which Spring Security handles -->
         <form th:action="@{/admin/login}" th:object="${admin}" method="post" class="login-form">
-            <h2>Doctor Portal</h2>
+            <h2>Admin Portal</h2>
             <!-- Display error message if login fails -->
             <p th:if="${param.error}" class="error-message" style="display: block;">
                 Invalid email or password.
