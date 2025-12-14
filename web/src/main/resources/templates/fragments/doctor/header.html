@@ -23,10 +23,6 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a th:href="@{/doctor/index}">Home</a></li>
-                    <li><a th:href="@{/doctor/index#about}">About</a></li>
-                    <li><a th:href="@{/doctor/index#services}">Services</a></li>
-
                     <li><a class="cta-btn" th:href="@{/doctor/appointment/list}">View Appointments</a></li>
 
                     <li class="dropdown" th:if="${doctor != null}">

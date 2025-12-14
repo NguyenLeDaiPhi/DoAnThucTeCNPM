@@ -65,6 +65,9 @@ public class PatientUpdateProfileController {
     // ... Các hàm index và profile bên dưới giữ nguyên ...
     @GetMapping("/index")
     public String patientIndex(Model model, Principal principal, HttpServletRequest request) {
+        if (principal == null) {
+            return "redirect:/patient/login";
+        }
         String email = principal.getName();
         Patient patient = patientRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));

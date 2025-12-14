@@ -1,6 +1,5 @@
 package com.e_health_care.web.doctor.dto;
 
-import jakarta.transaction.UserTransaction;
 import lombok.Data;
 
 @Data

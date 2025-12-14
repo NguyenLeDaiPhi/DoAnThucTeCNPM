@@ -21,12 +21,12 @@ public class PatientSecurityConfiguration {
     @Bean
     public SecurityFilterChain patientSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/patient/**", "/css/**", "/js/**", "/images/**", "/")
+                .securityMatcher("/patient/**")
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilterPatient, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/patient/login", "/patient/register", "/patient/success", "/css/**", "/js/**", "/images/**", "/").permitAll()
+                        .requestMatchers("/patient/login", "/patient/register", "/patient/success", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
