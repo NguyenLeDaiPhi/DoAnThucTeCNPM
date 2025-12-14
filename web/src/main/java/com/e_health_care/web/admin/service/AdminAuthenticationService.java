@@ -2,7 +2,6 @@ package com.e_health_care.web.admin.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.e_health_care.web.admin.dto.AdminDTO;
-import com.e_health_care.web.admin.repository.AdminRepository;
 
 @Service
 public class AdminAuthenticationService {
